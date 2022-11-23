@@ -19,7 +19,6 @@ namespace YTArchiveCollector.Modules
 
         private static void WC_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            _Form.DownloadVideoButton.Enabled = true;
             _Form.DownloadVideoButton.Text = "Видео загружено!";
             _Form.ChangeSoftStatusLabel(StringStatuses.SuccesVideoLoadStatus);
             Process.Start("explorer.exe", $"{FileManager._SaveFolder}\\Video");

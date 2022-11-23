@@ -10,6 +10,9 @@
     <Copyright>wDude</Copyright>
     <PackageIcon>YTAC.ico</PackageIcon>
     <ApplicationIcon>YTAC.ico</ApplicationIcon>
+    <PackageProjectUrl>https://github.com/WutADude</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/WutADude/YTArchiveCollector</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

@@ -36,6 +36,8 @@
             this.MainLabel = new System.Windows.Forms.Label();
             this.InfoBox = new System.Windows.Forms.GroupBox();
             this.InfoPanel = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ThumbnailBox = new System.Windows.Forms.PictureBox();
             this.DescriptionLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.DownloadVideoButton = new System.Windows.Forms.Button();
@@ -46,12 +48,12 @@
             this.ViewsCountLabel = new System.Windows.Forms.Label();
             this.ViewsLabel = new System.Windows.Forms.Label();
             this.VideoTitleLabel = new System.Windows.Forms.Label();
-            this.ThumbnailBox = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SoftStatusStrip.SuspendLayout();
             this.MainGB.SuspendLayout();
             this.InfoBox.SuspendLayout();
             this.InfoPanel.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +63,7 @@
             this.toolStripStatusLabel1,
             this.StatusLabel});
             this.SoftStatusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.SoftStatusStrip.Location = new System.Drawing.Point(0, 41);
+            this.SoftStatusStrip.Location = new System.Drawing.Point(0, 485);
             this.SoftStatusStrip.Name = "SoftStatusStrip";
             this.SoftStatusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
             this.SoftStatusStrip.Size = new System.Drawing.Size(514, 20);
@@ -107,12 +109,13 @@
             this.InfoBox.Controls.Add(this.InfoPanel);
             this.InfoBox.Location = new System.Drawing.Point(12, 39);
             this.InfoBox.Name = "InfoBox";
-            this.InfoBox.Size = new System.Drawing.Size(490, 0);
+            this.InfoBox.Size = new System.Drawing.Size(490, 444);
             this.InfoBox.TabIndex = 3;
             this.InfoBox.TabStop = false;
             // 
             // InfoPanel
             // 
+            this.InfoPanel.Controls.Add(this.groupBox1);
             this.InfoPanel.Controls.Add(this.DescriptionLabel);
             this.InfoPanel.Controls.Add(this.label5);
             this.InfoPanel.Controls.Add(this.DownloadVideoButton);
@@ -123,13 +126,30 @@
             this.InfoPanel.Controls.Add(this.ViewsCountLabel);
             this.InfoPanel.Controls.Add(this.ViewsLabel);
             this.InfoPanel.Controls.Add(this.VideoTitleLabel);
-            this.InfoPanel.Controls.Add(this.ThumbnailBox);
             this.InfoPanel.Controls.Add(this.label1);
             this.InfoPanel.Location = new System.Drawing.Point(6, 13);
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Size = new System.Drawing.Size(478, 424);
             this.InfoPanel.TabIndex = 3;
             this.InfoPanel.Visible = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.ThumbnailBox);
+            this.groupBox1.Location = new System.Drawing.Point(54, 32);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(368, 214);
+            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabStop = false;
+            // 
+            // ThumbnailBox
+            // 
+            this.ThumbnailBox.Location = new System.Drawing.Point(7, 15);
+            this.ThumbnailBox.Name = "ThumbnailBox";
+            this.ThumbnailBox.Size = new System.Drawing.Size(353, 191);
+            this.ThumbnailBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ThumbnailBox.TabIndex = 3;
+            this.ThumbnailBox.TabStop = false;
             // 
             // DescriptionLabel
             // 
@@ -181,6 +201,7 @@
             // 
             // ChannelNameLabel
             // 
+            this.ChannelNameLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
             this.ChannelNameLabel.Location = new System.Drawing.Point(42, 274);
             this.ChannelNameLabel.Name = "ChannelNameLabel";
             this.ChannelNameLabel.Size = new System.Drawing.Size(204, 15);
@@ -217,22 +238,13 @@
             // 
             // VideoTitleLabel
             // 
-            this.VideoTitleLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VideoTitleLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.VideoTitleLabel.Location = new System.Drawing.Point(5, 249);
             this.VideoTitleLabel.Name = "VideoTitleLabel";
             this.VideoTitleLabel.Size = new System.Drawing.Size(469, 23);
             this.VideoTitleLabel.TabIndex = 4;
             this.VideoTitleLabel.Text = "{VideoTitle}";
             this.VideoTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ThumbnailBox
-            // 
-            this.ThumbnailBox.Location = new System.Drawing.Point(5, 32);
-            this.ThumbnailBox.Name = "ThumbnailBox";
-            this.ThumbnailBox.Size = new System.Drawing.Size(469, 216);
-            this.ThumbnailBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ThumbnailBox.TabIndex = 3;
-            this.ThumbnailBox.TabStop = false;
             // 
             // label1
             // 
@@ -249,7 +261,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(514, 61);
+            this.ClientSize = new System.Drawing.Size(514, 505);
             this.Controls.Add(this.InfoBox);
             this.Controls.Add(this.MainGB);
             this.Controls.Add(this.SoftStatusStrip);
@@ -267,6 +279,7 @@
             this.InfoBox.ResumeLayout(false);
             this.InfoPanel.ResumeLayout(false);
             this.InfoPanel.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -294,5 +307,6 @@
         private Label DescriptionLabel;
         private Label label5;
         internal Button DownloadVideoButton;
+        private GroupBox groupBox1;
     }
 }

@@ -16,7 +16,16 @@ namespace YTArchiveCollector.Helpers
         #region["Video data"]
         protected string? GetVideoOwner => _JsonToParse?.GetProperty("microformat").GetProperty("playerMicroformatRenderer").GetProperty("ownerChannelName").GetString();
         protected string? GetVideoTitle => _JsonToParse?.GetProperty("videoDetails").GetProperty("title").GetString();
-        protected string? GetVideoDescription => _JsonToParse?.GetProperty("microformat").GetProperty("playerMicroformatRenderer").GetProperty("description").GetProperty("simpleText").GetString();
+        protected string? GetVideoDescription
+        {
+            get
+            {
+                JsonElement VideoDescriptionKey;
+                if (!(bool)_JsonToParse?.GetProperty("microformat").GetProperty("playerMicroformatRenderer").TryGetProperty("description", out VideoDescriptionKey))
+                    return string.Empty;
+                return _JsonToParse?.GetProperty("microformat").GetProperty("playerMicroformatRenderer").GetProperty("description").GetProperty("simpleText").GetString();
+            }
+        }
         protected string? GetViewsCount => _JsonToParse?.GetProperty("videoDetails").GetProperty("viewCount").GetString();
         protected string? GetThumbnailURL => _JsonToParse?.GetProperty("videoDetails").GetProperty("thumbnail").GetProperty("thumbnails").EnumerateArray().Last().GetProperty("url").GetString();
         protected List<string>? GetVideoTags
@@ -35,7 +44,16 @@ namespace YTArchiveCollector.Helpers
 
         #region["Video download data"]
         private JsonElement? VideoDownloadElement => _JsonToParse?.GetProperty("streamingData").GetProperty("formats").EnumerateArray().Last();
-        protected string? GetVideoDownloadURL => VideoDownloadElement.Value.GetProperty("url").GetString();
+        protected string? GetVideoDownloadURL
+        {
+            get
+            {
+                JsonElement VideoDownloadURLKey;
+                if (!(bool)VideoDownloadElement.Value.TryGetProperty("url", out VideoDownloadURLKey))
+                    return string.Empty;
+                return VideoDownloadURLKey.GetString();
+            }
+        }
         protected string? GetVideoDownloadMaxQuality => VideoDownloadElement.Value.GetProperty("qualityLabel").GetString();
         protected int? GetVideoDownloadFPS => VideoDownloadElement.Value.GetProperty("fps").GetInt32();
         protected string? GetVideoDownloadExtension => VideoDownloadElement.Value.GetProperty("mimeType").GetString()?.Split(";")[0].Replace("video/", "");

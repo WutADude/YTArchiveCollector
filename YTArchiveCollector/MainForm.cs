@@ -13,7 +13,12 @@ namespace YTArchiveCollector
         public MainForm()
         {
             InitializeComponent();
+#if DEBUG
+            CheckForIllegalCrossThreadCalls = false;
+#endif
             VideoLoader._Form = this;
+            InfoBox.Height = 0;
+            Height = StandartFormHeight;
             if (FileManager.FirstRunInDir)
                 Directory.CreateDirectory("Results");
         }
@@ -39,8 +44,10 @@ namespace YTArchiveCollector
                 string? Description = Video.VideoDescription;
                 List<string>? Tags = Video.VideoTags;
                 ThumbnailBox.ImageLocation = Video.ThumbnailURL;
+#if !DEBUG
                 FileManager.SaveData(Video);
-                ApplyNewInfo(Title, Video.OwnerChannelName, Video.VideoViewsCount, Description, Tags.Count(), Video.VideoDownloadMaxQuality, (int)Video.VideoDownloadFPS, Video.VideoDownloadExtension);
+#endif
+                ApplyNewInfo(Video);
                 ChangeSoftStatusLabel(StringStatuses.InfoShowStatus);
                 HeightAnimate();
             }
@@ -51,14 +58,23 @@ namespace YTArchiveCollector
             }
         }
 
-        private void ApplyNewInfo(string VideoTitle, string ChannelName, string ViewsCount, string Description, int TagsCount, string VideoLoadQuality, int VideoLoadFPS, string VideoLoadExtension)
+        private void ApplyNewInfo(VideoParser Video)
         {
-            VideoTitleLabel.Text = VideoTitle;
-            ChannelNameLabel.Text = ChannelName;
-            ViewsCountLabel.Text = ViewsCount;
-            TagsCountLabel.Text = TagsCount.ToString();
-            DescriptionLabel.Text = Description;
-            DownloadVideoButton.Text = $"({VideoLoadQuality} | {VideoLoadFPS} FPS | {VideoLoadExtension.ToUpper()}) Загружаем видео?";
+            VideoTitleLabel.Text = Video.VideoTitle;
+            ChannelNameLabel.Text = Video.OwnerChannelName;
+            ViewsCountLabel.Text = Video.VideoViewsCount;
+            TagsCountLabel.Text = Video.VideoTags?.Count().ToString();
+            DescriptionLabel.Text = string.IsNullOrEmpty(Video.VideoDescription) ? "отсутствует..." : Video.VideoDescription;
+            if (!string.IsNullOrEmpty(Video.VideoDownloadURL))
+            {
+                DownloadVideoButton.Enabled = true;
+                DownloadVideoButton.Text = $"({Video.VideoDownloadMaxQuality} | {Video.VideoDownloadFPS} FPS | {Video.VideoDownloadExtension?.ToUpper()}) Загружаем видео?";
+            }
+            else
+            {
+                DownloadVideoButton.Enabled = false;
+                DownloadVideoButton.Text = "Не возможно выполнить загрузку видео...";
+            }
         }
 
         internal void ChangeSoftStatusLabel(string Status)
