@@ -272,6 +272,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ArchiveCollector by wDude";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SoftStatusStrip.ResumeLayout(false);
             this.SoftStatusStrip.PerformLayout();
@@ -292,7 +293,6 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel StatusLabel;
         private GroupBox MainGB;
-        private Label MainLabel;
         private GroupBox InfoBox;
         private Panel InfoPanel;
         private Label label1;
@@ -308,5 +308,6 @@
         private Label label5;
         internal Button DownloadVideoButton;
         private GroupBox groupBox1;
+        internal Label MainLabel;
     }
 }

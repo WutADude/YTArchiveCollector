@@ -6,6 +6,7 @@ namespace YTArchiveCollector.Modules
     {
         internal VideoParser(string VideoURL) => GetJsonFromDocument(RequestsManager.GetVideoHtmlDocument(VideoURL));
 
+        internal bool? VideoIsStream { get => GetVideoIsStream; }
         internal string? OwnerChannelName { get => GetVideoOwner; }
         internal string? VideoTitle { get => GetVideoTitle; }
         internal string? VideoDescription { get => GetVideoDescription; }
@@ -16,6 +17,8 @@ namespace YTArchiveCollector.Modules
         internal int? VideoDownloadFPS { get => GetVideoDownloadFPS; }
         internal string? VideoDownloadExtension { get => GetVideoDownloadExtension; }
         internal string? VideoViewsCount { get => GetViewsCount; }
+        internal string? AudioDownloadURL { get => GetAudioDownloadURL; }
+        internal string? AudioDownloadQuality { get => GetAudioDownloadQuality; }
 
     }
 }

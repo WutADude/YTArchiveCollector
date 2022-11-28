@@ -14,6 +14,14 @@ namespace YTArchiveCollector.Helpers
         }
 
         #region["Video data"]
+        protected bool? GetVideoIsStream
+        {
+            get
+            {
+                JsonElement IsLiveProperty;
+                return (bool)_JsonToParse.Value.GetProperty("videoDetails").TryGetProperty("isLive", out IsLiveProperty);
+            }
+        }
         protected string? GetVideoOwner => _JsonToParse?.GetProperty("microformat").GetProperty("playerMicroformatRenderer").GetProperty("ownerChannelName").GetString();
         protected string? GetVideoTitle => _JsonToParse?.GetProperty("videoDetails").GetProperty("title").GetString();
         protected string? GetVideoDescription
@@ -42,21 +50,49 @@ namespace YTArchiveCollector.Helpers
         }
         #endregion
 
+        #region["Formats data"]
+        private JsonElement.ArrayEnumerator? VideoFormatsElement
+        {
+            get
+            {
+                JsonElement StreamingDataElement;
+                if (!(bool)_JsonToParse.Value.TryGetProperty("streamingData", out StreamingDataElement))
+                    return null;
+                return StreamingDataElement.GetProperty("adaptiveFormats").EnumerateArray();
+            }
+        }
+        #endregion
+
         #region["Video download data"]
-        private JsonElement? VideoDownloadElement => _JsonToParse?.GetProperty("streamingData").GetProperty("formats").EnumerateArray().Last();
+        private JsonElement? VideoToLoadElement => VideoFormatsElement.Value.First();
         protected string? GetVideoDownloadURL
         {
             get
             {
                 JsonElement VideoDownloadURLKey;
-                if (!(bool)VideoDownloadElement.Value.TryGetProperty("url", out VideoDownloadURLKey))
+                if (VideoFormatsElement == null || !(bool)VideoToLoadElement.Value.TryGetProperty("url", out VideoDownloadURLKey))
                     return string.Empty;
                 return VideoDownloadURLKey.GetString();
             }
         }
-        protected string? GetVideoDownloadMaxQuality => VideoDownloadElement.Value.GetProperty("qualityLabel").GetString();
-        protected int? GetVideoDownloadFPS => VideoDownloadElement.Value.GetProperty("fps").GetInt32();
-        protected string? GetVideoDownloadExtension => VideoDownloadElement.Value.GetProperty("mimeType").GetString()?.Split(";")[0].Replace("video/", "");
+        protected string? GetVideoDownloadMaxQuality => VideoFormatsElement != null ? VideoToLoadElement.Value.GetProperty("qualityLabel").GetString() : String.Empty;
+        protected int? GetVideoDownloadFPS => VideoFormatsElement != null ? VideoToLoadElement.Value.GetProperty("fps").GetInt32() : 0;
+        protected string? GetVideoDownloadExtension => VideoFormatsElement != null ? VideoToLoadElement.Value.GetProperty("mimeType").GetString()?.Split(";")[0].Replace("video/", "") : String.Empty;
+        #endregion
+
+        #region["Audio download data"]
+        private JsonElement? AudioToLoadElement => VideoFormatsElement.Value.First(e => e.GetProperty("mimeType").GetString().Contains("audio/mp4"));
+        protected string? GetAudioDownloadURL
+        {
+            get
+            {
+                JsonElement AudioDownloadURLKey;
+                if (AudioToLoadElement == null || !(bool)AudioToLoadElement.Value.TryGetProperty("url", out AudioDownloadURLKey))
+                    return string.Empty;
+                return AudioDownloadURLKey.GetString();
+            }
+        }
+        protected string? GetAudioDownloadQuality => AudioToLoadElement != null ? AudioToLoadElement.Value.GetProperty("quality").GetString() : string.Empty;
         #endregion
     }
 }
