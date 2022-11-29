@@ -83,7 +83,7 @@ namespace YTArchiveCollector.Modules
             _Form.DownloadVideoButton.Text = "Видео загружено!";
             _Form.ChangeSoftStatusLabel(StringStatuses.SuccesVideoAndAudioLoadStatus);
             if (FileManager.FFMPEGisOK)
-                new Task(delegate () { VideoUniquealizer.MergeAudioAndVideo(); }).Start();
+                new Task(delegate () { VideoUniquealizer.MergeAudioAndVideoAndUniqueize(); }).Start();
             else
                 _Form.ChangeSoftStatusLabel(StringStatuses.SomethingWrongWithFFMPEG);
         }

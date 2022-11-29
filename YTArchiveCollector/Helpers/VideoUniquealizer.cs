@@ -6,12 +6,12 @@ namespace YTArchiveCollector.Helpers
     internal static class VideoUniquealizer
     {
         internal static bool IsUniqueiazingProcessHappening;
-        internal static void MergeAudioAndVideo()
+        internal static void MergeAudioAndVideoAndUniqueize()
         {
             Loader._Form.ChangeSoftStatusLabel(StringStatuses.VideoUniqueizationStatus);
             IsUniqueiazingProcessHappening = true;
             string FolderPath = $"{FileManager._SaveFolder}\\Video";
-            string Args = $"/C ffmpeg -i \"{FolderPath}\\VideoLine.{FileManager.LastParsedVideo.VideoDownloadExtension}\" -i \"{FolderPath}\\AudioLine.mp4\" -vf noise=alls=1:allf=t -vf colortemperature={AnyHelpers.GetTotalyRandomNumber(16000, 19500)} -vf vibrance=-0.7 -vf fade=in:0:{AnyHelpers.GetTotalyRandomNumber(35, 85)} -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -pix_fmt yuv420p -shortest \"{FolderPath}\\UniqueVideo.mp4\"";
+            string Args = $"/C ffmpeg -i \"{FolderPath}\\VideoLine.{FileManager.LastParsedVideo.VideoDownloadExtension}\" -i \"{FolderPath}\\AudioLine.mp4\" -vf noise=alls=1:allf=t -vf colortemperature={AnyHelpers.GetTotalyRandomNumber(16000, 19500)} -vf vibrance=-0.7 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -pix_fmt yuv420p -shortest \"{FolderPath}\\UniqueVideo.mp4\"";
             Process.Start(new ProcessStartInfo()
             {
                 CreateNoWindow = true,
