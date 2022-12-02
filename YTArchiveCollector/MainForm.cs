@@ -129,6 +129,8 @@ namespace YTArchiveCollector
                     InfoBox.Height = 50;
                     AnimationManager.AnimatedChangeControlHeight(InfoBox, RaisedInfoBoxHeight);
                     InfoPanel.Visible = true;
+                    if (IsFormHeightNotOK)
+                       FormBorderStyle = FormBorderStyle.Sizable;
                 }
                 else
                 {
@@ -138,5 +140,7 @@ namespace YTArchiveCollector
                 }
             });
         }
+
+        private bool IsFormHeightNotOK => InfoBox.Height >= Height;
     }
 }
